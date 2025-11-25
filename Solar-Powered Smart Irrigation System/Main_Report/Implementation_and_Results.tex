@@ -1,0 +1,136 @@
+% ---------------- 3. Implementation and Results ----------------
+\noindent{\Large \textbf{3. Implementation and Results}}\\[0.5em]
+
+% 3.1 System Setup and Testing Procedure
+\noindent{\large \textbf{3.1 System Setup and Testing Procedure}}\\[0.3em]
+The system was implemented using the ESP32 microcontroller as the central controller, connected to all sensors, actuators, and the power supply unit. The solar panel charges a 12V 7Ah battery, which powers the ESP32 and sensors via a buck converter. All components were assembled on a breadboard and mounted on a prototype base.
+
+Testing was conducted in three phases:
+\begin{enumerate}
+    \item \textbf{Solar Tracking Module Testing} – LDR values were monitored under different light angles. Servo motors were adjusted accordingly to orient the solar panel toward the maximum light intensity.
+    \item \textbf{Irrigation Control Testing} – Soil moisture levels were tested at dry, moderate, and wet conditions. The relay activated the water pump when moisture dropped below the threshold.
+    \item \textbf{IoT Monitoring Testing} – Sensor data (moisture, temperature, humidity, gas levels) was uploaded to Blynk/ThingSpeak using Wi-Fi. Mobile monitoring was verified.
+\end{enumerate}
+
+% Add Figure 1 - Circuit diagram first
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.8\linewidth]{Main_Report/Image/Screenshot 2025-10-23 050314.png}
+\caption{Circuit diagram of the implemented system}
+\label{fig:circuit_diagram}
+\end{figure}
+
+\noindent
+Figure \ref{fig:circuit_diagram} shows the complete circuit diagram of the implemented system. The ESP32 microcontroller interfaces with all sensors and actuators. The power system includes a solar panel, battery, and buck converter to ensure stable 5V supply to the ESP32 and peripherals.  
+
+\vspace{0.5em}
+
+% Add Figure 2 - Solar tracking demonstration
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\linewidth]{Main_Report/Image/Screenshot 2025-11-15 140800.png}
+\caption{Solar tracking demonstration with LDRs and servo motors}
+\label{fig:solar_tracking}
+\end{figure}
+
+\noindent
+The figure above shows the solar tracking module in action. The servo motors adjust the panel orientation based on LDR readings to maximize sunlight exposure, improving energy generation.  
+
+\vspace{0.5em}
+
+% Add Figure 3 - Hardware prototype after solar tracking
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.8\linewidth]{Main_Report/Image/prototype.jpg}
+\caption{Hardware prototype mounted on the base}
+\label{fig:hardware_prototype}
+\end{figure}
+
+\noindent
+Figure \ref{fig:hardware_prototype} shows the complete hardware prototype. All components, including the ESP32, sensors, relays, and power module, are mounted on the base. The setup is modular, allowing easy adjustments and testing.  
+
+\vspace{0.5em}
+
+% 3.2 Performance Outcomes
+\noindent{\large \textbf{3.2 Performance Outcomes}}\\[0.3em]
+The implemented system was tested under various conditions to validate its performance. Key outcomes include the solar panel’s improved energy generation, automatic irrigation response, IoT monitoring functionality, and rain detection response.
+
+\begin{table}[h!]
+\centering
+\caption{Performance Outcomes of the Implemented System}
+\begin{tabular}{|p{2.7cm}|p{2.6cm}|p{2.7cm}|}
+\hline
+\textbf{Test Parameter} & \textbf{Expected Output} & \textbf{Actual Result} \\ \hline
+Solar Panel Output & Improved energy generation & Increased by 25--30\% using dual-axis tracking \\ \hline
+Soil Moisture Control & Pump ON when soil is dry & Achieved (pump activated $<$ 30\% moisture) \\ \hline
+IoT Data Monitoring & Display in real-time on mobile & Successful \\ \hline
+Rain Detection & Prevent irrigation when raining & Successfully detected \& pump disabled \\ \hline
+\end{tabular}
+\label{tab:performance}
+\end{table}
+
+\vspace{0.5em}
+
+% 3.3 Key Results (Circuit, Sensor Values, Display)
+\noindent{\large \textbf{3.3 Key Results (Circuit, Sensor Values, Display)}}\\[0.3em]
+\noindent
+The circuit functioned without voltage drop issues, maintaining a stable 5V output using the buck converter. Sensor readings were collected under different environmental conditions.
+
+\begin{itemize}
+    \item \textbf{Sensor Readings:}
+    \begin{itemize}
+        \item Soil moisture (Dry: 20--30\%, Wet: 70--90\%)
+        \item Temperature-Humidity (DHT11): 28°C--32°C, 60--65\% RH
+        \item Rain sensor: Digital HIGH (dry), LOW (rain detected)
+        \item Ultrasonic sensor: Water tank level accuracy ±2 cm
+    \end{itemize}
+\end{itemize}
+
+% Add Figure 4 - Sensor readings screenshot
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\linewidth]{Main_Report/Image/reading1.jpg}
+\caption{Sensor readings screenshot showing soil moisture and temperature-humidity values}
+\label{fig:sensor_readings}
+\end{figure}
+
+\noindent
+The sensor readings confirmed that the system reacts correctly to environmental changes. For example, the pump activates automatically when soil moisture is below the threshold.  
+
+\vspace{0.5em}
+
+% Add Figure 5 - IoT dashboard screenshot
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\linewidth]{Main_Report/Image/Screenshot 2025-10-23 035131.png}
+\caption{IoT WebApp dashboard showing real-time sensor values}
+\label{fig:iot_dashboard}
+\end{figure}
+
+\noindent
+\noindent
+Figure \ref{fig:iot_dashboard} shows the real-time IoT monitoring interface using the Blynk mobile application. All sensor data, including soil moisture, temperature, humidity, and rain detection, are continuously updated on the dashboard. The dashboard allows the user to monitor environmental conditions remotely, providing instant feedback on the status of the irrigation system. Alerts and notifications can be set to inform the user when the soil moisture drops below a critical threshold or when rainfall is detected, ensuring optimal water usage. 
+
+\vspace{0.5em}
+
+% 3.5 Objective Achievement
+\noindent{\large \textbf{3.4 Objective Achievement}}\\[0.3em]
+
+The new setup was built to hit key targets focused on smarter farming and saving power. It works by boosting sunlight capture with movement on two sides, running irrigation automatically based on live ground readings, sending constant updates about conditions through online and phone screens, while also making sure everything runs only on green energy with zero dependence on external electricity. Overall, the system brings together automation, monitoring, and renewable power in a single platform, and how each goal was successfully achieved is shown clearly in the chart underneath.
+
+
+
+\begin{table}[h!]
+\centering
+\caption{Objective Achievement Summary}
+\begin{tabular}{|p{3.3cm}|p{1.3cm}|p{3.4cm}|}
+\hline
+\textbf{Project Objective} & \textbf{Achieved?} & \textbf{Evidence} \\ \hline
+Solar panel power optimization & Yes & Increased efficiency by 25--30\% using dual-axis tracking \\ \hline
+Automatic irrigation & Yes & Moisture-based pump control activated accurately at $<$30\% soil moisture \\ \hline
+IoT-based monitoring & Yes & Real-time Blynk/ThingSpeak dashboard showing all sensor values continuously \\ \hline
+Renewable-powered system & Yes & System fully powered by solar panel and battery, operating without external electricity \\ \hline
+\end{tabular}
+\label{tab:objective}
+\end{table}
+

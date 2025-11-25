@@ -1,0 +1,168 @@
+% ---------------- II. System Design and Methodology ----------------
+\noindent{\Large \textbf{2. System Design and Methodology}}\\[0.5em]
+
+\noindent{\large \textbf{2.1 System Block Diagram}}\\[0.3em]
+The overall system architecture is based on an integrated sensing, processing, and actuation framework controlled by the ESP32 microcontroller. All hardware units—sensors, solar tracking module, irrigation components, and IoT interfaces—communicate directly with the ESP32.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.48\textwidth]{Main_Report/Figure/block_diagram_227_239_240.drawio (1).pdf}
+    \caption{Overall Block Diagram of the Proposed System}
+\end{figure}
+
+
+The block diagram illustrates the complete workflow including sensor inputs, solar tracking adjustments, irrigation control, power subsystem, and cloud/IoT communication.
+
+\vspace{0.8em}
+
+\noindent{\large \textbf{2.2 System Architecture}}\\[0.3em]
+The system architecture is organized into five modular layers:
+
+\begin{itemize}
+    \item \textbf{Sensing Layer:} Includes LDR sensors for light detection, soil moisture sensor, DHT11 sensor for temperature and humidity, MQ-2 gas sensor, ultrasonic water-level sensor, and rain sensor.
+    
+    \item \textbf{Processing Layer:} The ESP32 microcontroller processes all sensor data, performs solar tracking calculations, handles irrigation decisions, and manages IoT data flows.
+    
+    \item \textbf{Actuation Layer:} Comprises dual-axis servo motors used to position the solar panel and a relay-driven DC pump for automated irrigation.
+    
+    \item \textbf{Power Layer:} A solar panel charges a 7.4V battery to ensure continuous operation. A buck converter regulates voltage to power the ESP32 and sensors safely.
+    
+    \item \textbf{IoT Layer:} Enables remote data monitoring and control via a Local Web Server Dashboard and Telegram Bot API.
+\end{itemize}
+
+This layered design makes the system highly modular, scalable, and suitable for off-grid rural applications.
+
+\vspace{0.8em}
+
+\noindent{\large \textbf{2.3 Hardware Components}}\\[0.3em]
+The hardware components used in the system are listed in Table 1.
+
+\begin{table}[h]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Component} & \textbf{Qty} & \textbf{Function} \\
+\hline
+ESP32 Board & 1 & Controller + WiFi \\
+LDR Sensors & 4 & Sunlight detection \\
+SG90 Servos & 2 & Dual-axis tracking \\
+Soil Moisture Sensor & 1 & Soil dryness check \\
+DHT11 Sensor & 1 & Temp \& humidity \\
+Rain Sensor & 1 & Rain detection \\
+MQ-2 Sensor & 1 & Gas/smoke alert \\
+Ultrasonic Sensor & 1 & Tank level sensing \\
+Water Pump + Relay & 1 & Irrigation control \\
+7.4V Battery & 1 & Backup power \\
+Solar Panel & 1 & Power source \\
+\hline
+\end{tabular}
+\caption{Hardware Components Used in the System}
+\end{table}
+
+\vspace{0.8em}
+
+\noindent{\large \textbf{2.4 Software Tools}}\\[0.3em]
+The following software tools and libraries were used:
+
+\begin{itemize}
+    \item \textbf{Arduino IDE} — Used to write, compile, and upload the ESP32 firmware.
+    \item \textbf{ESP32 WiFi and WebServer Libraries} — Enable dashboard hosting and HTTP communication.
+    \item \textbf{UniversalTelegramBot} — Used for Telegram Bot control and message automation.
+    \item \textbf{ArduinoJSON} — For transmitting structured sensor data in JSON format.
+    \item \textbf{HTML, CSS, JavaScript} — Implemented the responsive IoT dashboard.
+\end{itemize}
+
+These tools provide seamless integration of hardware, IoT features, and automation logic.
+
+\vspace{0.8em}
+
+\noindent{\large \textbf{2.5 System Flowchart}}\\[0.3em]
+The operational flow of the system follows a continuous loop consisting of sensing, decision-making, actuation, and IoT communication.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.48\textwidth]{Main_Report/Figure/smart_irrigation_227_239_240.drawio.pdf} % adjust width if needed
+    \caption{Operational Flowchart of Smart Solar-Irrigation System}
+\end{figure}
+
+
+The flowchart clearly illustrates the automated logic for solar tracking, irrigation control, and sensor monitoring.
+
+\vspace{0.8em}
+
+\noindent{\large \textbf{2.6 Data Flow Description}}\\[0.3em]
+The data flow within the system occurs in five sequential steps:
+
+\begin{enumerate}
+    \item \textbf{Data Acquisition:} All sensors (LDR, soil, DHT11, rain, ultrasonic, MQ-2) send raw readings to the ESP32.
+    
+    \item \textbf{Data Processing:}  
+    The ESP32:
+    \begin{itemize}
+        \item compares LDR values,
+        \item calculates optimal servo positions,
+        \item checks soil moisture and rainfall status,
+        \item evaluates gas/smoke conditions.
+    \end{itemize}
+    
+    \item \textbf{Decision Making:}  
+    The microcontroller triggers irrigation when the soil is dry and disables pumping during rain.
+    
+    \item \textbf{Actuation:}  
+    \begin{itemize}
+        \item Servo motors adjust solar panel direction.
+        \item Relay module controls the water pump.
+        \item Buzzer alerts when gas/smoke is detected.
+    \end{itemize}
+    
+    \item \textbf{IoT Transmission:}
+    \begin{itemize}
+        \item Real-time data is sent to Telegram Bot.
+        \item Local web dashboard displays sensor values every 2 seconds.
+    \end{itemize}
+\end{enumerate}
+
+\vspace{0.8em}
+
+\noindent{\large \textbf{2.7 Main Algorithm (Pseudocode)}}\\[0.3em]
+\noindent\textbf{Algorithm : System Operation Workflow}\\[0.3em]
+\begin{enumerate}
+    \item Initialize WiFi module, Telegram Bot, sensors, and servo motors.
+    \item Set initial servo positions to $90^\circ$ on both axes.
+    \item \textbf{Loop continuously:}
+    \begin{enumerate}
+        \item \textbf{Solar Tracking:}
+        \begin{enumerate}
+            \item Read four LDR sensor values.
+            \item Compute horizontal and vertical light differences.
+            \item Adjust servo angles within safe limits.
+        \end{enumerate}
+        \item \textbf{Environmental Monitoring:}
+        \begin{enumerate}
+            \item Read temperature and humidity (DHT11).
+            \item Measure soil moisture level.
+            \item Read rain sensor status.
+            \item Detect smoke/gas using MQ-2 sensor.
+            \item Measure water tank level via ultrasonic sensor.
+        \end{enumerate}
+        \item \textbf{Irrigation Logic:}
+        \begin{enumerate}
+            \item If soil is dry \textbf{and} no rain is detected: activate pump.
+            \item Otherwise: deactivate pump.
+        \end{enumerate}
+        \item \textbf{IoT Communication:}
+        \begin{enumerate}
+            \item Process incoming Telegram commands (/status, /motor\_on, /motor\_off).
+            \item Update web dashboard with real-time JSON sensor data.
+        \end{enumerate}
+    \end{enumerate}
+\end{enumerate}
+
+\vspace{0.8em}
+
+\noindent{\large \textbf{2.8 Methodology Summary}}\\[0.3em]
+The system integrates real-time sensor monitoring, renewable energy harvesting, and automated irrigation into a single efficient platform. Dual-axis solar tracking maximizes power generation, while moisture-based irrigation conserves water. IoT functionalities allow users to monitor agricultural conditions remotely. The modular design ensures scalability and suitability for rural, off-grid environments.
+
